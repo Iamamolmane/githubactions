@@ -1,0 +1,11 @@
+name: run shell commands
+
+on: [push]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo string
+        run: echo "Hello amol mane github actions"
+  
