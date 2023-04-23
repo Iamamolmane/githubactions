@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 
       - name: PWD
-        run: echo "ls -lrt"    
+        run:  "ls -lrt"    
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         env:
