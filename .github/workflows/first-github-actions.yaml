@@ -3,11 +3,13 @@ name: run shell commands
 on: [push]
 
 jobs:
-  Run-shell-command:
+  Snyk:
     runs-on: ubuntu-latest
     steps:
       - name: Echo string
-        run: echo "Running Github Actions"
+        run: echo "Running Snyk"
+      - name: Checkout code
+        uses: actions/checkout@v2     
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         env:
