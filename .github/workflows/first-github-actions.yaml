@@ -9,7 +9,9 @@ jobs:
       - name: Echo string
         run: echo "Running Snyk"
       - name: Checkout code
-        uses: actions/checkout@v2     
+        uses: actions/checkout@v2 
+      - name: PWD
+        run: echo "ls -lrt"    
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         env:
