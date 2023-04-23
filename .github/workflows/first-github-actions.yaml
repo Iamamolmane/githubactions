@@ -1,18 +1,19 @@
 name: run shell commands
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   Snyk:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo string
-        run: echo "Running Snyk"
       - name: Checkout code
         uses: actions/checkout@v2 
-      - name: PWD
-        run:  "cd gitactions"    
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+      - name: Install Synk CLI
+        run: curl -sSL https://get.synk.io/cli | sh  
+      - name: Run Synk test
+        run: synk test --file=pom.xml
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
