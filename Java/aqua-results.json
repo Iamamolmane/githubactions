@@ -1,0 +1,184 @@
+{
+    "image": "dev-asre-service:14",
+    "scan_started": {
+      "seconds": 1676533419,
+      "nanos": 979214136
+    },
+    "scan_duration": 14,
+    "image_size": 150463451,
+    "digest": "dd",
+    "os": "alpine",
+    "version": "3.15.4",
+    "resources": [
+      {
+        "resource": {
+          "type": 2,
+          "path": "/bin/busybox",
+          "name": "busybox",
+          "version": "1.34.1",
+          "cpe": "cpe:/a:busybox:busybox:1.34.1",
+          "layer": "/bin/sh -c apk update && apk upgrade",
+          "layer_digest": "test"
+        },
+        "scanned": true,
+        "vulnerabilities": [
+          {
+            "name": "CVE-2022-28391",
+            "description": "tets",
+            "nvd_score": 6.8,
+            "nvd_score_version": "CVSS v2",
+            "nvd_vectors": "AV:N/AC:M/Au:N/C:P/I:P/A:P",
+            "nvd_severity": "medium",
+            "nvd_url": "https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-28391",
+            "publish_date": "2022-04-03",
+            "modification_date": "2022-08-11",
+            "nvd_score_v3": 8.8,
+            "nvd_vectors_v3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "nvd_severity_v3": "high",
+            "aqua_score": 8.8,
+            "aqua_severity": "high",
+            "aqua_vectors": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "aqua_scoring_system": "CVSS V3",
+            "aqua_severity_classification": "NVD CVSS V3 Score: 8.8",
+            "aqua_score_classification": "NVD CVSS V3 Score: 8.8"
+          }
+        ]
+      }
+    ],
+    "image_assurance_results": {
+      "disallowed": true,
+      "audit_required": true,
+      "policy_failures": [
+        {
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "blocking": true,
+          "controls": [
+            "root_user"
+          ]
+        },
+        {
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "blocking": true,
+          "controls": [
+            "max_score",
+            "max_severity",
+            "root_user"
+          ]
+        }
+      ],
+      "checks_performed": [
+        {
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "control": "max_score",
+          "maximum_score_allowed": 9,
+          "maximum_score_found": 8.8
+        },
+        {
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "control": "max_severity",
+          "maximum_severity_allowed": "critical",
+          "maximum_severity_found": "high"
+        },
+        {
+          "failed": true,
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "control": "root_user",
+          "root_user_found": true
+        },
+        {
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "control": "sensitive_data"
+        },
+        {
+          "policy_id": 6,
+          "policy_name": "FailByCritical",
+          "control": "malware"
+        },
+        {
+          "failed": true,
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "max_score",
+          "maximum_score_allowed": 7,
+          "maximum_score_found": 8.8
+        },
+        {
+          "failed": true,
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "max_severity",
+          "maximum_severity_allowed": "high",
+          "maximum_severity_found": "high"
+        },
+        {
+          "failed": true,
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "root_user",
+          "root_user_found": true
+        },
+        {
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "sensitive_data"
+        },
+        {
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "malware"
+        },
+        {
+          "policy_id": 7,
+          "policy_name": "ISAS",
+          "control": "partial_results"
+        }
+      ],
+      "block_required": true
+    },
+    "vulnerability_summary": {
+      "total": 1,
+      "critical": 0,
+      "high": 1,
+      "medium": 0,
+      "low": 0,
+      "negligible": 0,
+      "sensitive": 0,
+      "malware": 0,
+      "score_average": 8.8,
+      "max_score": 8.8
+    },
+    "scan_options": {
+      "scan_executables": true,
+      "scan_sensitive_data": true,
+      "scan_malware": true,
+      "scan_files": true,
+      "scan_timeout": 3600000000000,
+      "manual_pull_fallback": true,
+      "save_adhoc_scans": true,
+      "use_cvss3": true,
+      "dockerless": true,
+      "system_image_platform": "amd64:::",
+      "telemetry_enabled": true,
+      "enable_fast_scanning": true,
+      "memoryThrottling": true,
+      "suggest_os_upgrade": true
+    },
+    "initiating_user": "scannercicd",
+    "data_date": 1676492585,
+    "build_number": "14",
+    "build_url": "https://jenkins.pmideep.com/asre/job/asre-app-ecs-pipeline/job/dev/14/",
+    "pull_name": "dev-asre-service:14",
+    "changed_result": false,
+    "required_image_platform": "amd64:::",
+    "scanned_image_platform": "amd64::linux:",
+    "security_feeds_used": {
+      "executables": "616cbc3901f95a"
+    },
+    "local": true
+  }
