@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Set version number
-        run: echo "VERSION=$(gitversion /output buildserver)" >> $GITHUB_ENV
+        run: echo "VERSION=$(/tools/dotnet-gitversion /output buildserver)" >> $GITHUB_ENV
 
       - name: Echo version number
         run: echo $GITHUB_ENV
