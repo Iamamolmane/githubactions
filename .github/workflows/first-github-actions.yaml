@@ -1,4 +1,4 @@
-name: Java Github actions
+name: Synk Test
 
 on:
   push:
@@ -6,19 +6,19 @@ on:
       - main
 
 jobs:
-  Java:
+  synk_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v2
 
       - name: Install Synk CLI
         run: |
-          curl https://static.snyk.io/cli/latest/snyk-linux -o snyk
-          chmod +x snyk
-          sudo mv snyk /usr/local/bin/
+          curl https://downloads.snyk.io/cli/latest/snyk-linux -o snyk
+          chmod +x ./snyk
+          sudo mv ./snyk /usr/local/bin/snyk
 
-      - name: Run Synk test
-        run: synk test --file=pom.xml
+      - name: Test with Synk
+        run: snyk test --file=pom.xml
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
