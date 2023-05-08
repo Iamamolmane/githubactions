@@ -1,4 +1,4 @@
-name: run shell commands
+name: Java Github actions
 
 on:
   push:
@@ -6,13 +6,15 @@ on:
       - main
 
 jobs:
-  Snyk:
+  Java:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2 
+
       - name: Install Synk CLI
         run: curl https://static.snyk.io/cli/latest/snyk-macos -o snyk
+
       - name: Run Synk test
         run: synk test --file=pom.xml
         env:
