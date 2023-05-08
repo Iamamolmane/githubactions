@@ -8,7 +8,8 @@ jobs:
         uses: actions/checkout@master
 
       - name: Change directory
-        run: cd Java
+        run: cd Java && ls -lrt
+        
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-11@master
