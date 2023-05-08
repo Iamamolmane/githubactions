@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 
       - name: Install Synk CLI
-        run: curl -sSL https://get.synk.io/cli | sh  
+        run: curl https://static.snyk.io/cli/latest/snyk-macos -o snyk
       - name: Run Synk test
         run: synk test --file=pom.xml
         env:
