@@ -8,29 +8,35 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@master
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17'
+      - name: Set version number
+        run: echo "VERSION=$(gitversion /output buildserver)" >> $GITHUB_ENV
 
-      - name: Build with Maven
-        run: cd Java && mvn clean package
+      - name: Echo version number
+        run: echo $GITHUB_ENV
 
-      - name: Install Snyk CLI
-        run: |     
-          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          sudo npm install -g snyk  
+      # - name: Setup Java
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: '17'
 
-      - name: Run Snyk test
-        run: |
-          cd Java
-          chmod +x mvnw
-          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
-          snyk test --file=pom.xml     
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      # - name: Build with Maven
+      #   run: cd Java && mvn clean package
+
+      # - name: Install Snyk CLI
+      #   run: |     
+      #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      #     sudo apt-get install -y nodejs
+      #     sudo npm install -g snyk  
+
+      # - name: Run Snyk test
+      #   run: |
+      #     cd Java
+      #     chmod +x mvnw
+      #     ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
+      #     snyk test --file=pom.xml     
+      #   continue-on-error: true
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # - name: Push Trivy scan results to DI Accelerator
       #   if: success()
