@@ -1,24 +1,11 @@
-name: Synk Test
-
-on:
-  push:
-    branches:
-      - main
-
+name: Example workflow using Snyk
+on: push
 jobs:
-  synk_test:
+  security:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Synk CLI
-        run: |
-          curl https://downloads.snyk.io/cli/latest/snyk-linux -o snyk
-          chmod +x ./snyk
-          sudo mv ./snyk /usr/local/bin/snyk
-
-      - name: Test with Synk
-        run: snyk test --file=pom.xml
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
