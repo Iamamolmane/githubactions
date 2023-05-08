@@ -22,6 +22,7 @@ jobs:
       - name: Run Synk test
         run: |
           cd Java
+          chmod +x mvnw
           ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
           snyk test --file=pom.xml 
 
