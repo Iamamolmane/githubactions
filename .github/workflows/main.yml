@@ -16,15 +16,20 @@ jobs:
       - name: Build with Maven
         run: cd Java && mvn clean package
 
-      - name: Push Trivy scan results to DI Accelerator
-        if: success()
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
         env:
-          APPLICATION_NAME: Sample-java
-          VERSION: 1.0.0
-        run: |
-          cd Java
-          curl -X POST \
-            -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "@aqua-results.json" \
-            "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
+      # - name: Push Trivy scan results to DI Accelerator
+      #   if: success()
+      #   env:
+      #     APPLICATION_NAME: Sample-java
+      #     VERSION: 1.0.0
+      #   run: |
+      #     cd Java
+      #     curl -X POST \
+      #       -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
+      #       -H "Content-Type: application/json" \
+      #       -d "@aqua-results.json" \
+      #       "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
