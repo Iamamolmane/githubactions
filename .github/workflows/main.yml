@@ -19,7 +19,10 @@ jobs:
       - name: Install Synk CLI and Run Synk test
         run: |
           cd Java
-          curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          sudo npm install -g snyk
+          # curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk
           chmod +x mvnw
           ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
           snyk test --file=pom.xml       
