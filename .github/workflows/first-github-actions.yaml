@@ -13,7 +13,10 @@ jobs:
         uses: actions/checkout@v2 
 
       - name: Install Synk CLI
-        run: curl https://static.snyk.io/cli/latest/snyk-macos -o snyk
+        run: |
+          curl https://static.snyk.io/cli/latest/snyk-linux -o snyk
+          chmod +x snyk
+          sudo mv snyk /usr/local/bin/
 
       - name: Run Synk test
         run: synk test --file=pom.xml
