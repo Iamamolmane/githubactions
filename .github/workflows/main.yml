@@ -27,4 +27,4 @@ jobs:
             -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "@aqua-results.json" \
-            "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$applicatonName:$version"
+            "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
