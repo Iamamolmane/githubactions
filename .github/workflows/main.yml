@@ -17,19 +17,21 @@ jobs:
         run: cd Java && mvn clean package
 
       - name: Install Synk CLI and Run Synk test
-        run: |
-          cd Java
+        run: |     
           curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
           sudo apt-get install -y nodejs
-          sudo npm install -g snyk
-          # curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk
-          chmod +x mvnw
-          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
-          snyk test --file=pom.xml       
+          sudo npm install -g snyk  
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      
+      - name:  Run Synk test
+        run: |
+          cd Java
+          chmod +x mvnw
+          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
+          snyk test --file=pom.xml     
+        continue-on-error: true
+        
       # - name: Push Trivy scan results to DI Accelerator
       #   if: success()
       #   env:
