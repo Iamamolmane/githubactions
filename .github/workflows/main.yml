@@ -7,11 +7,10 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@master
 
-      - name: Change directory
-        run: cd Java && ls -lrt
-        
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-11@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Build with Maven
+        run: mvn clean package
