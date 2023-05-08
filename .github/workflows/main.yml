@@ -16,8 +16,15 @@ jobs:
       - name: Build with Maven
         run: cd Java && mvn clean package
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+      - name: Install Synk CLI
+        run: curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk
+
+      - name: Run Synk test
+        run: |
+          cd Java
+          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
+          snyk test --file=pom.xml 
+
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
