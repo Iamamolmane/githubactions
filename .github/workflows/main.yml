@@ -22,6 +22,7 @@ jobs:
           APPLICATION_NAME: Sample-java
           VERSION: 1.0.0
         run: |
+          cd Java
           curl -X POST \
             -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
             -H "Content-Type: application/json" \
