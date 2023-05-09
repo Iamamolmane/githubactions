@@ -8,22 +8,25 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@master
 
-      - name: Install GitVersion
-        run: |
-          sudo apt-get update
-          sudo apt-get install wget -y
-          wget https://github.com/GitTools/GitVersion/releases/download/v5.7.0/GitVersion-bin-linux-x64-5.7.0.tar.gz
-          tar -zxvf GitVersion-bin-linux-x64-5.7.0.tar.gz
-          sudo mv GitVersion /usr/local/bin/
-      - name: Run GitVersion
-        run: |
-          gitversion
+      - name: Determine Version
+        id:   gitversion 
+        uses: gittools/actions/gitversion/execute@v0
 
-      - name: Set version number
-        run: echo "VERSION=$(/tools/dotnet-gitversion /output buildserver)" >> $GITHUB_ENV
+      - name: Display GitVersion outputs (step output)
+        run: |
+          echo "Major: ${{ steps.gitversion.outputs.major }}"
+          echo "Minor: ${{ steps.gitversion.outputs.minor }}"
+          echo "Patch: ${{ steps.gitversion.outputs.patch }}"
 
-      - name: Echo version number
-        run: echo $GITHUB_ENV
+      # - name: Run GitVersion
+      #   run: |
+      #     gitversion
+
+      # - name: Set version number
+      #   run: echo "VERSION=$(/tools/dotnet-gitversion /output buildserver)" >> $GITHUB_ENV
+
+      # - name: Echo version number
+      #   run: echo $GITHUB_ENV
 
       # - name: Setup Java
       #   uses: actions/setup-java@v1
