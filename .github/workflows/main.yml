@@ -21,18 +21,9 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0
 
       - name: Display GitVersion outputs (step output)
-        run: |
-          echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
-
-      # - name: Run GitVersion
-      #   run: |
-      #     gitversion
-
-      # - name: Set version number
-      #   run: echo "VERSION=$(/tools/dotnet-gitversion /output buildserver)" >> $GITHUB_ENV
-
-      # - name: Echo version number
-      #   run: echo $GITHUB_ENV
+        env:
+          VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
+        run: echo "$VERSION"
 
       # - name: Setup Java
       #   uses: actions/setup-java@v1
