@@ -2,9 +2,10 @@ name: Java CI
 
 env:
   APPLICATION_NAME: "Sample-java-Application"
+  JfrogHelmRepo: "devsecops-guild-cloud-agonistic-helm-local"
+  JfrogDockerRepo: "devsecops-guild-cloud-agonistic-docker-local"
 
 on: push
-
 
 jobs:
   Java-CI:
@@ -43,12 +44,11 @@ jobs:
         env:
           VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         run: |
-          ls -lrt
           mkdir $VERSION
-          ls -lrt $VERSION
           mkdir -p $VERSION/Build-artifacts
           mkdir -p $VERSION/Build-reports
           mkdir -p $VERSION/Build-configuration
+          ls -lrt
 
       # - name: Setup Java
       #   uses: actions/setup-java@v1
