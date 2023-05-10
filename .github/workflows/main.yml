@@ -26,7 +26,7 @@ jobs:
         id:   gitversion 
         uses: gittools/actions/gitversion/execute@v0
 
-      - name: Git-secret
+      - name: Git-Secret Validation
         run: |
           echo "Security check started before build"
           echo "Checking for any secrets stored in the repo using git-secrets"
