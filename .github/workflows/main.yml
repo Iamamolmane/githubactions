@@ -26,6 +26,18 @@ jobs:
         id:   gitversion 
         uses: gittools/actions/gitversion/execute@v0
 
+      - name: Git-secret
+        run: |
+          echo "Security check started before build"
+          echo "Checking for any secrets stored in the repo using git-secrets"
+          if ! git-secrets --scan -r $PWD; then
+              echo "CI Job Aborting as there is Secret Stored in the Repository."
+              exit 1
+          else 
+              echo "No Secret found in the code" 
+              echo "Proceed for next step....."                            
+          fi
+
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
