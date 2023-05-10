@@ -39,38 +39,49 @@ jobs:
               echo "Proceed for next step....."                            
           fi
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17'
-
-      - name: Build with Maven
-        run: cd Java && mvn clean package
-
-      - name: Install Snyk CLI
-        run: |     
-          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          sudo npm install -g snyk  
-
-      - name: Run Snyk test
-        run: |
-          cd Java
-          chmod +x mvnw
-          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
-          snyk test --file=pom.xml     
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Push Aqua scan results to DI Accelerator
-        if: success()
+      - name: Directory For Jfrog Artifactory
         env:
           VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         run: |
-          cd Java
-          curl -X POST \
-            -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "@aqua-results.json" \
-            "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
+          ls -lrt
+          mkdir $VERSION
+          ls -lrt $VERSION
+          mkdir -p $VERSION/Build-artifacts
+          mkdir -p $VERSION/Build-reports
+          mkdir -p $VERSION/Build-configuration
+
+      # - name: Setup Java
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: '17'
+
+      # - name: Build with Maven
+      #   run: cd Java && mvn clean package
+
+      # - name: Install Snyk CLI
+      #   run: |     
+      #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      #     sudo apt-get install -y nodejs
+      #     sudo npm install -g snyk  
+
+      # - name: Run Snyk test
+      #   run: |
+      #     cd Java
+      #     chmod +x mvnw
+      #     ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
+      #     snyk test --file=pom.xml     
+      #   continue-on-error: true
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # - name: Push Aqua scan results to DI Accelerator
+      #   if: success()
+      #   env:
+      #     VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
+      #   run: |
+      #     cd Java
+      #     curl -X POST \
+      #       -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
+      #       -H "Content-Type: application/json" \
+      #       -d "@aqua-results.json" \
+      #       "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
