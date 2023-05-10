@@ -26,11 +26,6 @@ jobs:
         id:   gitversion 
         uses: gittools/actions/gitversion/execute@v0
 
-      - name: Set GitVersion
-        env:
-          VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
-        run: echo "$VERSION"
-
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
@@ -55,8 +50,10 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Push Trivy scan results to DI Accelerator
+      - name: Push Aqua scan results to DI Accelerator
         if: success()
+        env:
+          VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         run: |
           cd Java
           curl -X POST \
