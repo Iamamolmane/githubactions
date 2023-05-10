@@ -1,5 +1,11 @@
-name: Java
+name: Java CI
+
+env:
+  APPLICATION_NAME: "Sample-java-Application"
+
 on: push
+
+
 jobs:
   Java-CI:
     runs-on: ubuntu-latest
@@ -20,44 +26,41 @@ jobs:
         id:   gitversion 
         uses: gittools/actions/gitversion/execute@v0
 
-      - name: Display GitVersion outputs (step output)
+      - name: Set GitVersion
         env:
           VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         run: echo "$VERSION"
 
-      # - name: Setup Java
-      #   uses: actions/setup-java@v1
-      #   with:
-      #     java-version: '17'
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
 
-      # - name: Build with Maven
-      #   run: cd Java && mvn clean package
+      - name: Build with Maven
+        run: cd Java && mvn clean package
 
-      # - name: Install Snyk CLI
-      #   run: |     
-      #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-      #     sudo apt-get install -y nodejs
-      #     sudo npm install -g snyk  
+      - name: Install Snyk CLI
+        run: |     
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          sudo npm install -g snyk  
 
-      # - name: Run Snyk test
-      #   run: |
-      #     cd Java
-      #     chmod +x mvnw
-      #     ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
-      #     snyk test --file=pom.xml     
-      #   continue-on-error: true
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Run Snyk test
+        run: |
+          cd Java
+          chmod +x mvnw
+          ./mvnw dependency:tree -DoutputType=dot --batch-mode --non-recursive --file="pom.xml" > dependency-graph.dot
+          snyk test --file=pom.xml     
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Push Trivy scan results to DI Accelerator
-      #   if: success()
-      #   env:
-      #     APPLICATION_NAME: Sample-java
-      #     VERSION: 1.0.0
-      #   run: |
-      #     cd Java
-      #     curl -X POST \
-      #       -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
-      #       -H "Content-Type: application/json" \
-      #       -d "@aqua-results.json" \
-      #       "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
+      - name: Push Trivy scan results to DI Accelerator
+        if: success()
+        run: |
+          cd Java
+          curl -X POST \
+            -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "@aqua-results.json" \
+            "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
