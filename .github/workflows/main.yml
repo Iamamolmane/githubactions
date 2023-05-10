@@ -28,6 +28,7 @@ jobs:
 
       - name: Git-Secret Validation
         run: |
+          sudo apt-get update && sudo apt-get -y install git-secrets
           echo "Security check started before build"
           echo "Checking for any secrets stored in the repo using git-secrets"
           if ! git-secrets --scan -r $PWD; then
