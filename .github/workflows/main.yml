@@ -75,7 +75,9 @@ jobs:
 
       - name: Upload to JFrog Artifactory
         run: |
-          jf rt u $version/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/ 
+          jf rt u $version/ https://kyndryl.jfrog.io/artifactory/devsecops-guild-cloud-agonistic-maven-local/sales-order-golang/
+
+
       # - name: Install Snyk CLI
       #   run: |     
       #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
