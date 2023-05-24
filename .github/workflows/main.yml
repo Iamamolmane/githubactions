@@ -76,7 +76,7 @@ jobs:
       - name: Create JFrog Access Token
         run: |
           response=$(jf rt access-token-create --url https://kyndryl.jfrog.io/artifactory/ --server-id SERVER --user ${{ secrets.JfrogUser }} --password ${{ secrets.JfrogUserAPIKey }})
-          echo "$response" | jq -r '.access_token' >> $GITHUB_ENV
+          echo "::set-output name=access-token::$response"
 
       - name: Upload to JFrog Artifactory
         run: |
