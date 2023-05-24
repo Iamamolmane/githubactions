@@ -75,7 +75,7 @@ jobs:
 
       - name: Upload to JFrog Artifactory
         run: |
-          jf rt u $version/ https://kyndryl.jfrog.io/artifactory/devsecops-guild-cloud-agonistic-maven-local/sales-order-golang/
+          jf rt u --recursive=true --flat=false $VERSION/ https://kyndryl.jfrog.io/artifactory/devsecops-guild-cloud-agonistic-maven-local/sales-order-golang/
 
 
       # - name: Install Snyk CLI
