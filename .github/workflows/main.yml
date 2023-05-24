@@ -75,7 +75,7 @@ jobs:
 
       - name: Upload to JFrog Artifactory
         run: |
-          jf rt upload --recursive=true --flat=false --url https://kyndryl.jfrog.io --user amol.mane@kyndryl.com --password ${{ secrets.JfrogUserAPIKey }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}
+          jf rt upload 
       # - name: Install Snyk CLI
       #   run: |     
       #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
