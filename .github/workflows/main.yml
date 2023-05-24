@@ -4,6 +4,12 @@ env:
   APPLICATION_NAME: "Sample-java-Application"
   JfrogHelmRepo: "devsecops-guild-cloud-agonistic-helm-local"
   JfrogDockerRepo: "devsecops-guild-cloud-agonistic-docker-local"
+  JfrogURL: "kyndryl.jfrog.io"
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  JfrogGoRepo=: "devsecops-guild-cloud-agonistic-go-local"
+  JFrogArtifactory: "https://kyndryl.jfrog.io/artifactory/"
+  applicatonName: "sales-order-golang"
+
 
 on: push
 
@@ -48,15 +54,29 @@ jobs:
           mkdir -p $VERSION/Build-artifacts
           mkdir -p $VERSION/Build-reports
           mkdir -p $VERSION/Build-configuration
-          ls -lrt
 
-      # - name: Setup Java
-      #   uses: actions/setup-java@v1
-      #   with:
-      #     java-version: '17'
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
 
-      # - name: Build with Maven
-      #   run: cd Java && mvn clean package
+      - name: Build with Maven
+        run: cd Java && mvn clean package
+
+      - name : Jfrog CLI
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: ${{ secrets.JFrogArtifactory }}
+          JF_USER: ${{ secrets.JfrogUser }}
+          JF_PASSWORD: ${{ secrets.JfrogUserAPIKey }}
+          JF_SERVER_ID : "SERVER"
+      - run: |
+           jf rt ping
+
+      - name: Upload to JFrog Artifactory
+        run: |
+          jf rt upload --recursive=true --flat=false --url ${{ secrets.JFrogArtifactory }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
+
 
       # - name: Install Snyk CLI
       #   run: |     
@@ -75,13 +95,13 @@ jobs:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # - name: Push Aqua scan results to DI Accelerator
-      #   if: success()
-      #   env:
-      #     VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
-      #   run: |
-      #     cd Java
-      #     curl -X POST \
-      #       -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
-      #       -H "Content-Type: application/json" \
-      #       -d "@aqua-results.json" \
-      #       "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
+        # if: success()
+        # env:
+        #   VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
+        # run: |
+        #   cd Java
+        #   curl -X POST \
+        #     -H "Authorization: Token ${{ secrets.DI_TOKEN }}" \
+        #     -H "Content-Type: application/json" \
+        #     -d "@aqua-results.json" \
+        #     "https://di-accelerator.kyndryl-cloud.com/dash/api/dev_secops/v3/technical-services/image-scan/aqua/vulnerabilities?technicalServiceName=$APPLICATION_NAME:$VERSION"
