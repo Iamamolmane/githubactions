@@ -73,9 +73,9 @@ jobs:
       - run: |
            jf rt ping
 
-      # - name: Upload to JFrog Artifactory
-      #   run: |
-      #     jf rt upload --recursive=true --flat=false --url ${{ secrets.JFrogArtifactory }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
+      - name: Upload to JFrog Artifactory
+        run: |
+          jf rt upload --recursive=true --flat=false --url ${{ secrets.JFrogArtifactory }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
 
 
       # - name: Install Snyk CLI
