@@ -6,7 +6,7 @@ env:
   JfrogDockerRepo: "devsecops-guild-cloud-agonistic-docker-local"
   JfrogURL: "kyndryl.jfrog.io"
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  JfrogGoRepo=: "devsecops-guild-cloud-agonistic-go-local"
+  JfrogGoRepo : "devsecops-guild-cloud-agonistic-go-local"
   JFrogArtifactory: "https://kyndryl.jfrog.io/artifactory/"
   applicatonName: "sales-order-golang"
 
@@ -80,7 +80,7 @@ jobs:
 
       - name: Upload to JFrog Artifactory
         run: |
-          jf rt u --recursive=true --flat=false --url https://kyndryl.jfrog.io/artifactory/ --access-token ${{ env.access-token }} $VERSION/ devsecops-guild-cloud-agonistic-maven-local/sales-order-golang/
+          jf rt u --recursive=true --flat=false --url https://kyndryl.jfrog.io/artifactory/ --access-token ${{ env.access-token }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
 
 
       # - name: Install Snyk CLI
