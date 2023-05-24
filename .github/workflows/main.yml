@@ -80,7 +80,7 @@ jobs:
 
       - name: Upload to JFrog Artifactory
         run: |
-          jf rt u --recursive=true --flat=false --url https://kyndryl.jfrog.io/artifactory/ --access-token ${{ env.access-token }} $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
+          jf rt u --recursive=true --flat=false --url https://kyndryl.jfrog.io/artifactory/ $VERSION/ ${{ env.JfrogGoRepo }}/${{ env.applicatonName }}/
 
 
       # - name: Install Snyk CLI
