@@ -94,7 +94,7 @@ jobs:
       #   env:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Push Aqua scan results to DI Accelerator
+      #- name: Push Aqua scan results to DI Accelerator
         # if: success()
         # env:
         #   VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
