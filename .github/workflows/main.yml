@@ -73,6 +73,12 @@ jobs:
       - run: |
            jf rt ping
 
+      - name: Create JFrog Access Token
+        id: create-token
+        run: |
+          response=$(jfrog rt access-token-create --url https://kyndryl.jfrog.io --server-id SERVER --user $JfrogUser --password $JfrogUserAPIKey)
+          echo "$response" | jq -r '.access_token' >> $GITHUB_ENV
+
       - name: Upload to JFrog Artifactory
         run: |
           jf rt u --recursive=true --flat=false $VERSION/ https://kyndryl.jfrog.io/artifactory/devsecops-guild-cloud-agonistic-maven-local/sales-order-golang/
