@@ -79,8 +79,11 @@ jobs:
           echo "::set-output name=access-token::$response"
 
       - name: Upload to JFrog Artifactory
+        env:
+          JF_URL: https://kyndryl.jfrog.io/artifactory/
+          JF_USER: ${{ secrets.JfrogUser }}
         run: |
-          jf rt u --recursive=true --flat=false --url https://kyndryl.jfrog.io/artifactory/ --access-token amol $VERSION/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
+          jf rt u --recursive=true --flat=false $VERSION/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
 
 
       # - name: Install Snyk CLI
