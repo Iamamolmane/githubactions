@@ -99,6 +99,7 @@ jobs:
           JF_USER: githubactions
           JF_PASSWORD: "@Welcome12345"
         run: |
+          ls -lrt
           jf rt u --recursive=true --flat=false $VERSION/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
 
 
