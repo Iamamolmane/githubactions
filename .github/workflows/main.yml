@@ -100,6 +100,8 @@ jobs:
         #   JF_PASSWORD: "@Welcome12345"
         run: |
           ls -lrt
+          echo amolmane>>amol.txt
+          cp amol.txt 0.1.0-alpha.96
           jf rt u --recursive=true --flat=false 0.1.0-alpha.96/ sales-order/sales-order-golang/
 
 
