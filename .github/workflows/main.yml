@@ -55,6 +55,16 @@ jobs:
           mkdir -p $VERSION/Build-reports
           mkdir -p $VERSION/Build-configuration
 
+      - name : Jfrog CLI
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: https://rysinghope.jfrog.io
+          JF_USER: githubactions
+          JF_PASSWORD: "@Welcome123"
+          JF_SERVER_ID : "SERVER"
+      - run: |
+           jf rt ping
+
       # - name: Setup Java
       #   uses: actions/setup-java@v1
       #   with:
@@ -63,31 +73,31 @@ jobs:
       # - name: Build with Maven
       #   run: cd Java && mvn clean package
 
-      - name : Jfrog CLI
-        uses: jfrog/setup-jfrog-cli@v3
-        env:
-          JF_URL: https://kyndryl.jfrog.io
-          JF_USER: ${{ secrets.JfrogUser }}
-          JF_PASSWORD: ${{ secrets.JfrogUserAPIKey }}
-          JF_SERVER_ID : "SERVER"
-      - run: |
-           jf rt ping
+      # - name : Jfrog CLI
+      #   uses: jfrog/setup-jfrog-cli@v3
+      #   env:
+      #     JF_URL: https://kyndryl.jfrog.io
+      #     JF_USER: ${{ secrets.JfrogUser }}
+      #     JF_PASSWORD: ${{ secrets.JfrogUserAPIKey }}
+      #     JF_SERVER_ID : "SERVER"
+      # - run: |
+      #      jf rt ping
 
-      - name: Create JFrog Access Token
-        id: jfrog-token
-        run: |
-          response=$(jf rt access-token-create --url https://kyndryl.jfrog.io/artifactory/ --server-id SERVER --user ${{ secrets.JfrogUser }} --password ${{ secrets.JfrogUserAPIKey }})
-          echo "::set-output name=access-token::$response"
+      # - name: Create JFrog Access Token
+      #   id: jfrog-token
+      #   run: |
+      #     response=$(jf rt access-token-create --url https://kyndryl.jfrog.io/artifactory/ --server-id SERVER --user ${{ secrets.JfrogUser }} --password ${{ secrets.JfrogUserAPIKey }})
+      #     echo "::set-output name=access-token::$response"
 
-      - name: Set Access Token as Environment Variable
-        run: |
-          echo "ACCESS_TOKEN=${{ steps.jfrog-token.outputs.access-token }}" >> $GITHUB_ENV
+      # - name: Set Access Token as Environment Variable
+      #   run: |
+      #     echo "ACCESS_TOKEN=${{ steps.jfrog-token.outputs.access-token }}" >> $GITHUB_ENV
 
       - name: Upload to JFrog Artifactory
         env:
-          JF_URL: https://kyndryl.jfrog.io/artifactory/
-          JF_USER: ${{ secrets.JfrogUser }}
-          JF_ACCESS_TOKEN: ${{ env.ACCESS_TOKEN }}
+          JF_URL: https://rysinghope.jfrog.io/artifactory/
+          JF_USER: githubactions
+          JF_PASSWORD: "@Welcome12345"
         run: |
           jf rt u --recursive=true --flat=false $VERSION/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
 
