@@ -100,7 +100,7 @@ jobs:
         #   JF_PASSWORD: "@Welcome12345"
         run: |
           ls -lrt
-          jf rt u --recursive=true --flat=false 0.1.0-alpha.95/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
+          jf rt u --recursive=true --flat=false 0.1.0-alpha.96/ sales-order/sales-order-golang/
 
 
       # - name: Install Snyk CLI
