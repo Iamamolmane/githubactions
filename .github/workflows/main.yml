@@ -60,7 +60,7 @@ jobs:
         env:
           JF_URL: https://rysinghope.jfrog.io
           JF_USER: githubactions
-          JF_PASSWORD: "@Welcome123"
+          JF_PASSWORD: "@Welcome12345"
           JF_SERVER_ID : "SERVER"
       - run: |
            jf rt ping
