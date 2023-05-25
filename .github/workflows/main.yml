@@ -94,13 +94,13 @@ jobs:
       #     echo "ACCESS_TOKEN=${{ steps.jfrog-token.outputs.access-token }}" >> $GITHUB_ENV
 
       - name: Upload to JFrog Artifactory
-        env:
-          JF_URL: https://rysinghope.jfrog.io/artifactory/
-          JF_USER: githubactions
-          JF_PASSWORD: "@Welcome12345"
+        # env:
+        #   JF_URL: https://rysinghope.jfrog.io/artifactory/
+        #   JF_USER: githubactions
+        #   JF_PASSWORD: "@Welcome12345"
         run: |
           ls -lrt
-          jf rt u --recursive=true --flat=false $VERSION/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
+          jf rt u --recursive=true --flat=false 0.1.0-alpha.93/ devsecops-guild-cloud-agonistic-go-local/sales-order-golang/
 
 
       # - name: Install Snyk CLI
